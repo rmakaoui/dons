@@ -10,7 +10,7 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model) {
         model.addAttribute("welcomeMessage", "Welcome to Thymeleaf with Spring Boot!");
-        return "home"; // This returns the template file home.html
+        return "home"; // This returns the template file home.html 
     }
 }
 
