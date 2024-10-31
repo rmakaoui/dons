@@ -1,6 +1,6 @@
 #FileLock
-#Thu Oct 31 12:57:51 CET 2024
-hostName=DESKTOP-FS89C9B
-id=192e2706adf9a1a5cb6b4d9f26e154783c3425d46ba
+#Fri Nov 01 00:16:06 WEST 2024
+hostName=DESKTOP-IFHHLJQ
+id=192e4dd4db55adb0e41134f11e5452a04e3e5473a5e
 method=file
-server=192.168.1.79\:52631
+server=192.168.70.1\:50128
