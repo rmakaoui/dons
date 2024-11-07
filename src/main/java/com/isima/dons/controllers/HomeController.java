@@ -12,5 +12,11 @@ public class HomeController {
         model.addAttribute("welcomeMessage", "Welcome to Thymeleaf with Spring Boot!");
         return "home"; // This returns the template file home.html 
     }
+
+    @GetMapping("/annonce/add")
+    public String addAnnoce(Model model) {
+        //model.addAttribute("welcomeMessage", "Welcome to Thymeleaf with Spring Boot!");
+        return "add-annonce"; // This returns the template file home.html 
+    }
 }
 

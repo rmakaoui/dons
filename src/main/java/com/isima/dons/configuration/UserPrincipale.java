@@ -22,6 +22,13 @@ public class UserPrincipale implements UserDetails{
 		return null;
 	}
 
+	
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return this.user.getId();
+	}
+
+
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub

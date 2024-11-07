@@ -16,6 +16,7 @@ public class Annonce {
 
     private String titre;
 
+    @Column(length = 500)
     private String description;
 
     public Annonce(Long id, String titre, String description, EtatObjet etatObjet, LocalDate datePublication, double latitude, double longitude, boolean typeDon, User vendeur, List<String> keywords) {
@@ -31,6 +32,8 @@ public class Annonce {
         this.keywords = keywords;
     
     }
+
+    
 
     public Annonce() {
 
