@@ -29,6 +29,7 @@ public class Annonce {
         this.typeDon = typeDon;
         this.vendeur = vendeur;
         this.keywords = keywords;
+    
     }
 
     public Annonce() {
