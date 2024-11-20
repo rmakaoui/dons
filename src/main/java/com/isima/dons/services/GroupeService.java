@@ -1,5 +1,6 @@
 package com.isima.dons.services;
 
+import com.isima.dons.entities.Annonce;
 import com.isima.dons.entities.Groupe;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface GroupeService {
 
     Groupe getGroupeById(Long id);
 
-    Groupe createGroupe(Groupe groupe);
+    Groupe createGroupe(Long annonceId, Long userId);
 
     Groupe updateGroupe(Long id, Groupe updatedGroupe);
 

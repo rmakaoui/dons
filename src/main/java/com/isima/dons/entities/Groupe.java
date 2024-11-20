@@ -21,6 +21,12 @@ public class Groupe {
     @ManyToOne
     private User acheteur;
 
+    public void setPri(boolean pri) {
+        this.pri = pri;
+    }
+
+    private boolean pri;
+
     public Groupe(Long id, List<Annonce> annonces, User acheteur) {
         this.id = id;
         this.annonces = annonces;

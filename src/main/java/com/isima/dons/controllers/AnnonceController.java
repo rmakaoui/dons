@@ -7,6 +7,7 @@ import com.isima.dons.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,8 +31,11 @@ public class AnnonceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Annonce>> getAllAnnonces() {
-        return new ResponseEntity<>(annonceService.getAllAnnonces(), HttpStatus.OK);
+    public ResponseEntity<List<Annonce>> getAllAnnonces(Model model) {
+        System.out.println("les annonnces");
+        List<Annonce> annonces = annonceService.getAllAnnonces();
+        model.addAttribute("dashboard", annonces); // Pass the annonces to the Thymeleaf template
+        return new ResponseEntity<>(annonces, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

@@ -1,11 +1,17 @@
 package com.isima.dons.controllers;
 
+import com.isima.dons.configuration.UserPrincipale;
+import com.isima.dons.entities.Annonce;
 import com.isima.dons.entities.Groupe;
+import com.isima.dons.entities.User;
 import com.isima.dons.services.GroupeService;
+import com.isima.dons.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -13,12 +19,12 @@ import java.util.List;
 @RequestMapping("/api/groupes")
 public class GroupeController {
 
-    private final GroupeService groupeService;
+    @Autowired
+    private GroupeService groupeService;
 
     @Autowired
-    public GroupeController(GroupeService groupeService) {
-        this.groupeService = groupeService;
-    }
+    private UserService userService;
+
 
     @GetMapping
     public ResponseEntity<List<Groupe>> getAllGroupes() {
@@ -31,9 +37,22 @@ public class GroupeController {
     }
 
     @PostMapping
-    public ResponseEntity<Groupe> createGroupe(@RequestBody Groupe groupe) {
-        return new ResponseEntity<>(groupeService.createGroupe(groupe), HttpStatus.CREATED);
+    public RedirectView createGroupe(@RequestParam("annonceId") Long annonceId, Authentication authentication) {
+        System.out.println(annonceId);
+
+        // Get the authenticated user
+        UserPrincipale userPrincipale = (UserPrincipale) authentication.getPrincipal();
+        User user = userService.getUserById(userPrincipale.getId());
+        System.out.println(user.getUsername());
+
+        // Create the groupe
+        groupeService.createGroupe(annonceId, user.getId());
+
+        // Redirect to /group after the group is created
+        return new RedirectView("/groupe");
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Groupe> updateGroupe(@PathVariable Long id, @RequestBody Groupe updatedGroupe) {
