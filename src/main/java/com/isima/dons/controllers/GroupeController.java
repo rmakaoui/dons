@@ -36,6 +36,12 @@ public class GroupeController {
         return new ResponseEntity<>(groupeService.getGroupeById(id), HttpStatus.OK);
     }
 
+    @DeleteMapping
+    public ResponseEntity<String> deleteAllGroups() {
+        groupeService.deleteAllGroups();
+        return ResponseEntity.ok("All groups have been deleted successfully.");
+    }
+
     @PostMapping
     public RedirectView createGroupe(@RequestParam("annonceId") Long annonceId, Authentication authentication) {
         System.out.println(annonceId);
@@ -59,9 +65,30 @@ public class GroupeController {
         return new ResponseEntity<>(groupeService.updateGroupe(id, updatedGroupe), HttpStatus.OK);
     }
 
+    @PostMapping("/validate")
+    public RedirectView validateGroupe(@RequestParam Long groupeId) {
+        Groupe groupe = groupeService.validateGroupe(groupeId);
+        return new RedirectView("/valide");
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGroupe(@PathVariable Long id) {
         groupeService.deleteGroupe(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/remove")
+    public RedirectView removeAnnonceFromGroupe(
+            @RequestParam Long groupeId,
+            @RequestParam Long annonceId) {
+        System.out.println("groupeId: "+groupeId);
+        System.out.println("annonceId: "+annonceId);
+        boolean isRemoved = groupeService.removeAnnonceFromGroupe(groupeId, annonceId);
+
+        if (isRemoved) {
+            return new RedirectView("/groupe");
+        } else {
+            return null;
+        }
     }
 }

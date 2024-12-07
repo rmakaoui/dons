@@ -24,7 +24,7 @@ public class SecurityConfig{
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpsecurity) throws Exception {
 		httpsecurity.csrf(csrf -> csrf.disable()); 
 		httpsecurity.authorizeHttpRequests(request -> request
-				.requestMatchers("login","signup").permitAll()
+				.requestMatchers("login","signup","/h2-console/**").permitAll()
 				.anyRequest().authenticated())
 		.formLogin(form -> form
 	            .loginPage("/login") // URL of your custom login form

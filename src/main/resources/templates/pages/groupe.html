@@ -1,4 +1,11 @@
+<div style="margin: 10px;">
+    <form th:action="@{/api/groupes/validate}" method="post">
+        <input type="hidden" name="groupeId" th:value="${groupe.id}" />
+        <button type="submit" value="Valider" class="btn btn-success" style=" border: none;">Valider mon don</button>
+    </form>
+</div>
 <div th:if="${annonces}" class="cards-container">
+
     <div class="card" th:each="annonce : ${annonces}">
         <div class="container">
             <h2><b th:text="${annonce.titre}"></b></h2> ( <b th:text="${annonce.vendeur.username}"></b> )
@@ -6,12 +13,14 @@
             <ul>
                 <li th:each="keyword : ${annonce.keywords}" th:text="${keyword}"></li>
             </ul>
-            <form th:action="@{/api/groupes}" method="post">
+            <form th:action="@{/api/groupes/remove}" method="post">
+                <input type="hidden" name="groupeId" th:value="${groupe.id}" />
                 <input type="hidden" name="annonceId" th:value="${annonce.id}" />
-                <button type="submit" class="btn btn-info" style="width: 100%; height: 100%; background-color: transparent; border: none;"></button>
+                <button type="submit" value="delete" class="btn btn-secondary" style=" border: none;">delete</button>
             </form>
         </div>
     </div>
+
 </div>
 
 <style>

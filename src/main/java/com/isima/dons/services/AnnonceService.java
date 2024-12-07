@@ -8,6 +8,8 @@ public interface AnnonceService {
 
     List<Annonce> getAllAnnonces();
 
+    List<Annonce> getAnnoncesByUser(Long idUser);
+
     Annonce getAnnonceById(Long id);
 
     Annonce createAnnonce(Annonce annonce);

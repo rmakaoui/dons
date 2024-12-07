@@ -59,15 +59,8 @@ public class DummyDataServiceImpl implements DummyDataService {
                 // Set a random but realistic publication date
                 annonce.setDatePublication(LocalDate.now().minusDays(faker.random().nextInt(30)));
 
-                // Generate random latitude and longitude within valid ranges
-                double latitude = -90.0 + (faker.random().nextDouble() * 180.0);  // latitude from -90 to 90
-                double longitude = -180.0 + (faker.random().nextDouble() * 360.0); // longitude from -180 to 180
 
-                // Set the values in the annonce
-                annonce.setLatitude(latitude);
-                annonce.setLongitude(longitude);
-
-
+                annonce.setZone(generateProductZone(faker));
 
                 // Set random donation type (true/false)
                 annonce.setTypeDon(faker.random().nextBoolean());
@@ -77,6 +70,7 @@ public class DummyDataServiceImpl implements DummyDataService {
 
                 // Generate relevant keywords for the annonce
                 annonce.setKeywords(generateKeywords(faker));
+                annonce.setPri(false);
 
                 annonceRepository.save(annonce);
             }
@@ -94,6 +88,31 @@ public class DummyDataServiceImpl implements DummyDataService {
         };
         return titles[faker.random().nextInt(titles.length)];
     }
+
+    private String generateProductZone(Faker faker) {
+        String[] zones = {
+                "Île-de-France",
+                "Provence-Alpes-Côte d'Azur",
+                "Auvergne-Rhône-Alpes",
+                "Nouvelle-Aquitaine",
+                "Occitanie",
+                "Hauts-de-France",
+                "Grand Est",
+                "Bretagne",
+                "Normandie",
+                "Pays de la Loire",
+                "Bourgogne-Franche-Comté",
+                "Centre-Val de Loire",
+                "Corse",
+                "Martinique",
+                "Guadeloupe",
+                "La Réunion",
+                "Guyane",
+                "Mayotte"
+        };
+        return zones[faker.random().nextInt(zones.length)];
+    }
+
 
     // Generate more logical descriptions related to products or services
     private String generateProductDescription(Faker faker) {

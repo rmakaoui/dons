@@ -19,24 +19,65 @@ public class Annonce {
     @Column(length = 500)
     private String description;
 
-    public Annonce(Long id, String titre, String description, EtatObjet etatObjet, LocalDate datePublication, double latitude, double longitude, boolean typeDon, User vendeur, List<String> keywords) {
-        this.id = id;
-        this.titre = titre;
-        this.description = description;
-        this.etatObjet = etatObjet;
-        this.datePublication = datePublication;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.typeDon = typeDon;
-        this.vendeur = vendeur;
-        this.keywords = keywords;
-    
-    }
+
 
     
 
     public Annonce() {
 
+    }
+
+    public Annonce(Long id, String titre, String description, EtatObjet etatObjet, LocalDate datePublication, String zone, boolean typeDon, boolean pri, User vendeur, List<String> keywords) {
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.etatObjet = etatObjet;
+        this.datePublication = datePublication;
+        this.zone = zone;
+        this.typeDon = typeDon;
+        this.vendeur = vendeur;
+        this.keywords = keywords;
+        this.pri = pri;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public EtatObjet getEtatObjet() {
+        return etatObjet;
+    }
+
+    public LocalDate getDatePublication() {
+        return datePublication;
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public boolean isTypeDon() {
+        return typeDon;
+    }
+
+    public User getVendeur() {
+        return vendeur;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
     }
 
     public enum EtatObjet {
@@ -49,11 +90,19 @@ public class Annonce {
 
     private LocalDate datePublication;
 
-    private double latitude;
-
-    private double longitude;
+    private String zone;
 
     private boolean typeDon;
+
+    public boolean isPri() {
+        return pri;
+    }
+
+    public void setPri(boolean pri) {
+        this.pri = pri;
+    }
+
+    private boolean pri;
 
     public void setVendeur(User vendeur) {
         this.vendeur = vendeur;
@@ -85,13 +134,6 @@ public class Annonce {
         this.datePublication = datePublication;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
 
     public boolean getTypeDon() {
         return typeDon;

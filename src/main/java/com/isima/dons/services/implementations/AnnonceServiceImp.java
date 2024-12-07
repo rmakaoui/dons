@@ -19,7 +19,12 @@ public class AnnonceServiceImp implements AnnonceService {
 
 
     public List<Annonce> getAllAnnonces() {
-        return annonceRepository.findAll();
+        return annonceRepository.getAnnoncesDisponible();
+    }
+
+    @Override
+    public List<Annonce> getAnnoncesByUser(Long idUser) {
+        return annonceRepository.getAnnoncesByUser(idUser);
     }
 
     public Annonce getAnnonceById(Long id) {
@@ -28,6 +33,7 @@ public class AnnonceServiceImp implements AnnonceService {
     }
 
     public Annonce createAnnonce(Annonce annonce) {
+        annonce.setPri(false);
         return annonceRepository.save(annonce);
     }
 
@@ -40,8 +46,7 @@ public class AnnonceServiceImp implements AnnonceService {
             existingAnnonce.setDescription(updatedAnnonce.getDescription());
             existingAnnonce.setEtatObjet(updatedAnnonce.getEtatObjet());
             existingAnnonce.setDatePublication(updatedAnnonce.getDatePublication());
-            existingAnnonce.setLatitude(updatedAnnonce.getLatitude());
-            existingAnnonce.setLongitude(updatedAnnonce.getLongitude());
+            existingAnnonce.setZone(updatedAnnonce.getZone());
             existingAnnonce.setTypeDon(updatedAnnonce.getTypeDon());
             existingAnnonce.setKeywords(updatedAnnonce.getKeywords());
             return annonceRepository.save(existingAnnonce);

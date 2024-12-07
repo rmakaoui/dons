@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.isima.dons.configuration.UserPrincipale;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,14 +45,17 @@ public class AnnonceController {
     }
 
     @PostMapping
-    public ResponseEntity<Annonce> createAnnonce(@ModelAttribute Annonce annonce) {
+    public RedirectView createAnnonce(@ModelAttribute Annonce annonce) {
+        System.out.println("la zone : "+annonce.getZone());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipale userDetails = (UserPrincipale) authentication.getPrincipal();
         annonce.setDatePublication(LocalDate.now());
         annonce.setVendeur(userService.getUserById(userDetails.getId()));
         System.out.println(annonce.getKeywords());
         annonce.setKeywords(Arrays.asList(annonce.getKeywords().get(0).split(" ")));
-        return new ResponseEntity<>(annonceService.createAnnonce(annonce), HttpStatus.CREATED);
+        Annonce annonce1 = annonceService.createAnnonce(annonce);
+
+        return new RedirectView("/mes-annonces");
     }
 
 

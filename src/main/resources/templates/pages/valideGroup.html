@@ -1,21 +1,16 @@
-<form th:action="@{/annonce/add}" method="get">
-    <button type="submit" class="btn btn-primary">Add Annonce</button>
-</form>
+<div th:if="${groupes}" class="cards-container">
 
-<div th:if="${annonces}" class="cards-container" style="margin-top: 10px">
-    <div class="card" th:each="annonce : ${annonces}">
+    <div class="card" th:each="groupe : ${groupes}">
         <div class="container">
-            <h2><b th:text="${annonce.titre}"></b></h2> ( <b th:text="${annonce.vendeur.username}"></b> )
-            <p th:text="${annonce.description}"></p>
+            created : <b th:text="${groupe.creationDate}"></b><br>
+            Validated at : <b th:text="${groupe.validationDate}"></b>
+<br>Les annonces des groupes validé :
             <ul>
-                <li th:each="keyword : ${annonce.keywords}" th:text="${keyword}"></li>
+                <li th:each="annonce : ${groupe.annonces}"><b th:text="${annonce.titre}"></b> ( <b th:text="${annonce.vendeur.username}"></b> )</li>
             </ul>
-            <form th:action="@{/api/groupes}" method="post">
-                <input type="hidden" name="annonceId" th:value="${annonce.id}" />
-                <button type="submit" value="add to group" class="btn btn-info" style="border: none;">add to group</button>
-            </form>
         </div>
     </div>
+
 </div>
 
 <style>
