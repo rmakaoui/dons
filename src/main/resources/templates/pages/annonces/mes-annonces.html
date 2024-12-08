@@ -1,42 +1,20 @@
-<a href="/annonces/add" class="btn btn-primary">Add Annonce</a>
+<form th:action="@{/annonces/add}" method="get">
+  <button type="submit" class="btn btn-primary">Add Annonce</button>
+</form>
 
 <div th:if="${annonces}" class="cards-container" style="margin-top: 10px">
   <div class="card" th:each="annonce : ${annonces}">
     <div class="container">
-      <a th:href="@{/annonces/{id}(id=${annonce.id})}" style="color: black">
-        <h2><b th:text="${annonce.titre}"></b></h2>
-      </a>
-
-      (
-      <a
-        th:href="@{/annonces/vendeur/{id}(id=${annonce.vendeur.id})}"
-        th:text="${annonce.vendeur.username}"
-      ></a
-      >)
+      <h2><b th:text="${annonce.titre}"></b></h2>
+      ( <b th:text="${annonce.vendeur.username}"></b> )
       <p th:text="${annonce.description}"></p>
       <ul>
         <li th:each="keyword : ${annonce.keywords}" th:text="${keyword}"></li>
       </ul>
-
-      <div class="d-flex align-items-center">
-        <a
-          th:href="@{/messages/{receiverId}(receiverId=${annonce.vendeur.id})}"
-          class="btn btn-info me-2"
-        >
-          Send Message
-        </a>
-        <form th:action="@{/groupes}" method="post">
-          <input type="hidden" name="annonceId" th:value="${annonce.id}" />
-          <button
-            type="submit"
-            value="add to group"
-            class="btn btn-info"
-            style="border: none"
-          >
-            add to group
-          </button>
-        </form>
-      </div>
+      <!--      <form th:action="@{/api/groupes}" method="post">-->
+      <!--        <input type="hidden" name="annonceId" th:value="${annonce.id}" />-->
+      <!--        <button type="submit" value="add to group" class="btn btn-info" style="border: none;">add to group</button>-->
+      <!--      </form>-->
     </div>
   </div>
 </div>

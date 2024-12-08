@@ -2,6 +2,7 @@ package com.isima.dons.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -19,15 +20,17 @@ public class Message {
     @ManyToOne
     private User reciever;
 
-    public Message(Long id, String message, User sender, User reciever) {
+    private LocalDateTime sentDate; // New field for message sent date
+
+    public Message(Long id, String message, User sender, User reciever, LocalDateTime sentDate) {
         this.id = id;
         this.message = message;
         this.sender = sender;
         this.reciever = reciever;
+        this.sentDate = sentDate;
     }
 
     public Message() {
-
     }
 
     public void setId(Long id) {
@@ -44,5 +47,9 @@ public class Message {
 
     public void setReciever(User reciever) {
         this.reciever = reciever;
+    }
+
+    public void setSentDate(LocalDateTime sentDate) {
+        this.sentDate = sentDate;
     }
 }

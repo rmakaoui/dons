@@ -1,6 +1,7 @@
 package com.isima.dons.services.implementations;
 
 import com.isima.dons.entities.Message;
+import com.isima.dons.entities.User;
 import com.isima.dons.repositories.MessageRepository;
 import com.isima.dons.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,20 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<Message> getAllMessages() {
         return messageRepository.findAll();
+    }
+
+    @Override
+    public List<Message> getConversation(Long sender, Long receiver) {
+        List<Message> messages = messageRepository.findMessagesBetweenUsers(sender, receiver);
+
+        return messages;
+    }
+
+    @Override
+    public List<User> getConversationsByUserId(Long userId) {
+        // Récupérer tous les messages où l'utilisateur est soit l'expéditeur soit le
+        // destinataire
+        return messageRepository.findAllUsersInvolvedWithSender(userId);
     }
 
     @Override

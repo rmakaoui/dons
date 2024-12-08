@@ -17,9 +17,12 @@ public class AnnonceServiceImp implements AnnonceService {
     @Autowired
     private AnnonceRepository annonceRepository;
 
-
     public List<Annonce> getAllAnnonces() {
         return annonceRepository.getAnnoncesDisponible();
+    }
+
+    public List<Annonce> getAnnoncesByVendeurId(Long vendeurId) {
+        return annonceRepository.findByVendeurId(vendeurId);
     }
 
     @Override

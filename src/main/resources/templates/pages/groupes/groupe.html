@@ -1,42 +1,38 @@
-<a href="/annonces/add" class="btn btn-primary">Add Annonce</a>
-
-<div th:if="${annonces}" class="cards-container" style="margin-top: 10px">
+<div style="margin: 10px">
+  <form th:action="@{/groupes/validate}" method="post">
+    <input type="hidden" name="groupeId" th:value="${groupe.id}" />
+    <button
+      type="submit"
+      value="Valider"
+      class="btn btn-success"
+      style="border: none"
+    >
+      Valider mon don
+    </button>
+  </form>
+</div>
+<div th:if="${annonces}" class="cards-container">
   <div class="card" th:each="annonce : ${annonces}">
     <div class="container">
-      <a th:href="@{/annonces/{id}(id=${annonce.id})}" style="color: black">
-        <h2><b th:text="${annonce.titre}"></b></h2>
-      </a>
-
-      (
-      <a
-        th:href="@{/annonces/vendeur/{id}(id=${annonce.vendeur.id})}"
-        th:text="${annonce.vendeur.username}"
-      ></a
-      >)
+      <h2><b th:text="${annonce.titre}"></b></h2>
+      ( <b th:text="${annonce.vendeur.username}"></b> )
       <p th:text="${annonce.description}"></p>
       <ul>
         <li th:each="keyword : ${annonce.keywords}" th:text="${keyword}"></li>
       </ul>
-
-      <div class="d-flex align-items-center">
-        <a
-          th:href="@{/messages/{receiverId}(receiverId=${annonce.vendeur.id})}"
-          class="btn btn-info me-2"
+      <form th:action="@{/groupes}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        <input type="hidden" name="groupeId" th:value="${groupe.id}" />
+        <input type="hidden" name="annonceId" th:value="${annonce.id}" />
+        <button
+          type="submit"
+          value="delete"
+          class="btn btn-secondary"
+          style="border: none"
         >
-          Send Message
-        </a>
-        <form th:action="@{/groupes}" method="post">
-          <input type="hidden" name="annonceId" th:value="${annonce.id}" />
-          <button
-            type="submit"
-            value="add to group"
-            class="btn btn-info"
-            style="border: none"
-          >
-            add to group
-          </button>
-        </form>
-      </div>
+          delete
+        </button>
+      </form>
     </div>
   </div>
 </div>

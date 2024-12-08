@@ -1,4 +1,4 @@
-package com.isima.dons.controllers;
+package com.isima.dons.controllers.api;
 
 import com.isima.dons.entities.User;
 import com.isima.dons.services.UserService;
@@ -11,11 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+public class UserApiController {
 
     @Autowired
     private UserService userService;
-
 
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllUsers() {

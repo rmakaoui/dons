@@ -23,7 +23,7 @@ import java.util.Optional;
 public class GroupeServiceImp implements GroupeService {
 
     @Autowired
-    private  GroupeRepository groupeRepository;
+    private GroupeRepository groupeRepository;
 
     @Autowired
     private UserService userService;
@@ -34,7 +34,6 @@ public class GroupeServiceImp implements GroupeService {
     @Autowired
     private AnnonceRepository annonceRepository;
 
-
     @Override
     public List<Groupe> getAllGroupes() {
         return groupeRepository.findAll();
@@ -44,6 +43,25 @@ public class GroupeServiceImp implements GroupeService {
     public Groupe getGroupeById(Long id) {
         return groupeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Groupe not found"));
+    }
+
+    @Override
+    public List<Groupe> getGroupeByAcheteurAndNotTaken(Long userId) {
+        return groupeRepository.getGroupeByAcheteurAndNotTaken(userId);
+    }
+
+    @Override
+    public List<Groupe> getGroupeByAcheteurAndTaken(Long userId) {
+        return groupeRepository.getGroupeByAcheteurAndTaken(userId);
+    }
+
+    @Override
+    public List<Annonce> getAnnoncesFromGroupe(Long userId) {
+        List<Groupe> groupes = getGroupeByAcheteurAndNotTaken(userId);
+        if (!groupes.isEmpty()) {
+            return groupes.get(0).getAnnonces(); // Assuming the first group is the one you're interested in
+        }
+        return new ArrayList<>();
     }
 
     @Override
@@ -68,7 +86,7 @@ public class GroupeServiceImp implements GroupeService {
         } else {
             // Add the annonce to the first group found (assuming one group per user)
             Groupe existingGroupe = existingGroups.get(0);
-            if(existingGroupe.getAnnonces().isEmpty()){
+            if (existingGroupe.getAnnonces().isEmpty()) {
                 existingGroupe.setCreationDate(new Date());
             }
             List<Annonce> annoncesInGroup = existingGroupe.getAnnonces();
@@ -84,8 +102,6 @@ public class GroupeServiceImp implements GroupeService {
             }
         }
     }
-
-
 
     @Override
     public Groupe updateGroupe(Long id, Groupe updatedGroupe) {
@@ -147,7 +163,7 @@ public class GroupeServiceImp implements GroupeService {
         groupe.setPri(true);
         groupe.setValidationDate(new Date());
         groupeRepository.save(groupe);
-        for(Annonce annonce:groupe.getAnnonces()){
+        for (Annonce annonce : groupe.getAnnonces()) {
             annonce.setPri(true);
             annonceRepository.save(annonce);
         }

@@ -10,6 +10,8 @@ public interface AnnonceService {
 
     List<Annonce> getAnnoncesByUser(Long idUser);
 
+    List<Annonce> getAnnoncesByVendeurId(Long vendeurId);
+
     Annonce getAnnonceById(Long id);
 
     Annonce createAnnonce(Annonce annonce);

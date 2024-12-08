@@ -15,26 +15,26 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig{
-		
+public class SecurityConfig {
+
 	@Autowired
 	private UserDetailsService myUserDetailsService;
-	
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpsecurity) throws Exception {
-		httpsecurity.csrf(csrf -> csrf.disable()); 
+		httpsecurity.csrf(csrf -> csrf.disable());
 		httpsecurity.authorizeHttpRequests(request -> request
-				.requestMatchers("login","signup","/h2-console/**").permitAll()
+				.requestMatchers("login", "signup", "/h2-console/**").permitAll()
 				.anyRequest().authenticated())
-		.formLogin(form -> form
-	            .loginPage("/login") // URL of your custom login form
-	            .defaultSuccessUrl("/home") // Redirect after successful login
-	            .permitAll())
-	        .logout(logout -> logout.permitAll());
-//// to allow http authentication (Postam or server )
+				.formLogin(form -> form
+						.loginPage("/login") // URL of your custom login form
+						.defaultSuccessUrl("/", true) // Redirect after successful login
+						.permitAll())
+				.logout(logout -> logout.permitAll());
+		//// to allow http authentication (Postam or server )
 		return httpsecurity.build();
 	}
-	
+
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -42,5 +42,5 @@ public class SecurityConfig{
 		provider.setUserDetailsService(myUserDetailsService);
 		return provider;
 	}
-	
+
 }
